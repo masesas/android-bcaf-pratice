@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/homeFragment">
+
+    <!-- Top-level: ID wajib sama dengan item di bottom_nav_menu.xml. -->
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.masesas.exercise.bcaf_test_1.presentation.legacy.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="com.masesas.exercise.bcaf_test_1.presentation.legacy.transaction.TransactionFragment"
+        android:label="@string/title_transaction"
+        tools:layout="@layout/fragment_transaction">
+
+        <action
+            android:id="@+id/action_transaction_to_transactionDetail"
+            app:destination="@id/transactionDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.masesas.exercise.bcaf_test_1.presentation.legacy.notification.NotificationFragment"
+        android:label="@string/title_notification"
+        tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.masesas.exercise.bcaf_test_1.presentation.legacy.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profile_to_formProfile"
+            app:destination="@id/formProfileFragment" />
+
+        <action
+            android:id="@+id/action_profile_to_dokumenProfile"
+            app:destination="@id/dokumenProfileFragment" />
+    </fragment>
+
+    <!-- Child fragment: full screen, bottom navigation disembunyikan HomeActivity. -->
+
+    <fragment
+        android:id="@+id/transactionDetailFragment"
+        android:name="com.masesas.exercise.bcaf_test_1.presentation.legacy.transaction.TransactionDetailFragment"
+        android:label="@string/title_transaction_detail"
+        tools:layout="@layout/fragment_transaction_detail">
+
+        <argument
+            android:name="transactionId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/formProfileFragment"
+        android:name="com.masesas.exercise.bcaf_test_1.presentation.legacy.profile.FormProfileFragment"
+        android:label="@string/title_form_profile"
+        tools:layout="@layout/fragment_form_profile" />
+
+    <fragment
+        android:id="@+id/dokumenProfileFragment"
+        android:name="com.masesas.exercise.bcaf_test_1.presentation.legacy.profile.DokumenProfileFragment"
+        android:label="@string/title_dokumen_profile"
+        tools:layout="@layout/fragment_dokumen_profile" />
+
+</navigation>

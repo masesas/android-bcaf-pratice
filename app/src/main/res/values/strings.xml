@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">bcaf-test-1</string>
+
+    <!-- Auth: kegagalan umum -->
+    <string name="auth_error_validation">Periksa kembali data yang Anda isi.</string>
+    <string name="auth_error_invalid_credentials">Email atau password salah.</string>
+    <string name="auth_error_email_already_registered">Email ini sudah terdaftar.</string>
+    <string name="auth_error_session_expired">Sesi Anda telah berakhir. Silakan masuk kembali.</string>
+    <string name="auth_error_network">Tidak dapat terhubung. Periksa koneksi Anda.</string>
+    <string name="auth_error_unexpected">Terjadi kesalahan. Silakan coba lagi.</string>
+    <string name="error_unauthorized">Sesi Anda tidak valid. Silakan masuk kembali.</string>
+    <string name="error_api_detail">%1$s</string>
+
+    <!-- Auth: validasi per field -->
+    <string name="auth_validation_required">Wajib diisi.</string>
+    <string name="auth_validation_invalid_email">Format email tidak valid.</string>
+    <string name="auth_validation_name_too_short">Nama minimal %1$d karakter.</string>
+    <string name="auth_validation_password_too_short">Password minimal %1$d karakter.</string>
+    <!-- Navigasi: judul destination -->
+    <string name="title_home">Home</string>
+    <string name="title_transaction">Transaction</string>
+    <string name="title_notification">Notification</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_transaction_detail">Transaction Detail</string>
+    <string name="title_form_profile">Form Profile</string>
+    <string name="title_dokumen_profile">Dokumen Profile</string>
+
+    <!-- Navigasi: aksi ke child fragment -->
+    <string name="action_open_transaction_detail">Buka Transaction Detail</string>
+    <string name="action_open_form_profile">Buka Form Profile</string>
+    <string name="action_open_dokumen_profile">Buka Dokumen Profile</string>
+    <string name="transaction_detail_content">Transaction Detail Fragment\nID: %1$s</string>
+    <string name="screen_session_summary">%1$s\n\nStatus: %2$s\nUser: %3$s</string>
+    <string name="session_user_none">-</string>
+
+    <!-- Compose -->
+    <string name="screen_title_format">%1$s Screen</string>
+    <string name="compose_action_open_transaction_detail">Open Transaction Detail</string>
+    <string name="compose_action_edit_profile">Edit Profile</string>
+    <string name="compose_action_dokumen_profile">Dokumen Profile</string>
+</resources>

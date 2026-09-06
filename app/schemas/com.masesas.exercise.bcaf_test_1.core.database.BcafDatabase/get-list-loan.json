@@ -1,0 +1,138 @@
+{
+  "type": "object",
+  "description": "Bentuk baku badan response untuk seluruh endpoint",
+  "properties": {
+    "statusCode": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Kode status HTTP, sama dengan status pada baris response",
+      "example": 200
+    },
+    "message": {
+      "type": "string",
+      "description": "Penjelasan singkat hasil pemrosesan",
+      "example": "Karyawan ditemukan"
+    },
+    "data": {
+      "type": "array",
+      "description": "Muatan hasil, bernilai null ketika permintaan gagal",
+      "items": {
+        "type": "object",
+        "description": "Produk pinjaman beserta jejak auditnya",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "ID produk",
+            "example": 1
+          },
+          "kode": {
+            "type": "string",
+            "description": "Kode produk",
+            "example": "KTA"
+          },
+          "nama": {
+            "type": "string",
+            "description": "Nama produk",
+            "example": "Kredit Tanpa Agunan"
+          },
+          "bungaPersen": {
+            "type": "number",
+            "description": "Bunga per tahun dalam persen",
+            "example": 12.5
+          },
+          "tenorMin": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Tenor terpendek dalam bulan",
+            "example": 6
+          },
+          "tenorMax": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Tenor terpanjang dalam bulan",
+            "example": 36
+          },
+          "plafondMin": {
+            "type": "number",
+            "description": "Nominal pinjaman terkecil",
+            "example": 5000000
+          },
+          "plafondMax": {
+            "type": "number",
+            "description": "Nominal pinjaman terbesar",
+            "example": 50000000
+          },
+          "aktif": {
+            "type": "boolean",
+            "description": "Produk bisa dipakai mengajukan pinjaman",
+            "example": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Waktu pembuatan baris",
+            "example": "2026-08-23T15:04:05Z"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Waktu perubahan terakhir",
+            "example": "2026-08-23T15:04:05Z"
+          }
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "description": "Informasi paginasi, hanya muncul pada endpoint berpaginasi",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Nomor halaman saat ini, dimulai dari 0",
+          "example": 0
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Jumlah baris per halaman",
+          "example": 10
+        },
+        "totalElements": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Jumlah seluruh baris pada semua halaman",
+          "example": 57
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Jumlah halaman yang tersedia",
+          "example": 6
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "description": "Rincian kegagalan, hanya muncul ketika permintaan gagal",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Kode kategori kegagalan",
+          "example": "VALIDATION_ERROR"
+        },
+        "details": {
+          "type": "array",
+          "description": "Rincian per field, hanya diisi pada kegagalan validasi",
+          "example": [
+            "nama: tidak boleh kosong"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

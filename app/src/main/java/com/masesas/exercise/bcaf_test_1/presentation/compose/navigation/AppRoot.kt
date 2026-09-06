@@ -1,0 +1,59 @@
+package com.masesas.exercise.bcaf_test_1.presentation.compose.navigation
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.component.AppBottomBar
+
+@Composable
+fun AppRoot(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
+) {
+    val currentDestination = navController.currentBackStackEntryAsState().value?.destination
+    val destinations = remember { TopLevelDestination.entries }
+    val showBottomBar = destinations.any { currentDestination.isRoute(it.startRoute) }
+
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        bottomBar = {
+            if (showBottomBar) {
+                AppBottomBar(
+                    destinations = destinations,
+                    isSelected = { currentDestination.isInGraph(it.graph) },
+                    onSelect = { navController.navigateToTopLevel(it) },
+                )
+            }
+        },
+    ) { innerPadding ->
+        AppNavHost(
+            navController = navController,
+            modifier = Modifier.padding(innerPadding),
+        )
+    }
+}
+
+private fun NavDestination?.isRoute(route: AppRoute): Boolean =
+    this?.hasRoute(route::class) == true
+
+private fun NavDestination?.isInGraph(graph: AppRoute): Boolean =
+    this?.hierarchy?.any { it.hasRoute(graph::class) } == true
+
+private fun NavHostController.navigateToTopLevel(destination: TopLevelDestination) {
+    navigate(destination.graph) {
+        popUpTo(graph.findStartDestination().id) { saveState = true }
+        launchSingleTop = true
+        restoreState = true
+    }
+}

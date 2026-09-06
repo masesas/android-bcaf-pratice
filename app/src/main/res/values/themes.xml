@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Widget.BcafTest.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Bcaftest1" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/colorAccentDark</item>
+        <item name="colorOnSecondary">@color/purple_100</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/grey_20</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="buttonStyle">@style/Widget.BcafTest.Button.TextButton</item>
+    </style>
+
+    <style name="Theme.Bcaftest1" parent="Base.Theme.Bcaftest1" />
+</resources>
