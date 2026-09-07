@@ -1,4 +1,4 @@
-package com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme
+package com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

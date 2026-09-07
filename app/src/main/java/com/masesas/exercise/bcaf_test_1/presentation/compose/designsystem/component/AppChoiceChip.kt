@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.MyBcafTest1Theme
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Radius
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Spacing
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.MyBcafTest1Theme
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Radius
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Spacing
 
 private val BorderWidth = 1.dp
 

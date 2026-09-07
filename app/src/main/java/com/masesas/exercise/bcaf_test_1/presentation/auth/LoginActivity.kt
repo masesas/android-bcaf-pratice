@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUpForm() = with(binding) {
-        etEmail.setText("customer1@masesas.test")
+        etEmail.setText("customer.seed08@masesas.test")
         etPassword.setText("password123")
 
         btnLogin.setOnClickListener {

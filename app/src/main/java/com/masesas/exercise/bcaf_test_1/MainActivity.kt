@@ -14,8 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.masesas.exercise.bcaf_test_1.core.collectOnLifecycle
 import com.masesas.exercise.bcaf_test_1.databinding.ActivityMainBinding
-import com.masesas.exercise.bcaf_test_1.presentation.auth.LoginActivity
 import com.masesas.exercise.bcaf_test_1.presentation.auth.showHomeDestinationDialog
+import com.masesas.exercise.bcaf_test_1.presentation.compose.HomeActivityCompose
 import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.auth.AuthUiState
 import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * [com.masesas.exercise.bcaf_test_1.presentation.viewmodel.auth.AuthStatus.UNKNOWN] layar ini
  * menahan tampilan agar tidak berkedip ke Login untuk user yang sebenarnya sudah login.
  *
- * Sudah login → dialog pemilih stack UI. Belum login → [LoginActivity].
+ * Sudah login → dialog pemilih stack UI. Belum login → layar login Compose di [HomeActivityCompose].
  */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -88,12 +88,12 @@ class MainActivity : AppCompatActivity() {
         destinationDialog = showHomeDestinationDialog(label)
     }
 
-    /** Flag mencegah Activity Login dibuka dua kali kalau state ter-emit ulang. */
+    /** Flag mencegah Activity login dibuka dua kali kalau state ter-emit ulang. */
     private fun goToLogin() {
         if (loginLaunched) return
         loginLaunched = true
 
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, HomeActivityCompose::class.java))
         finish()
     }
 }

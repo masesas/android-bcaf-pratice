@@ -19,10 +19,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.masesas.exercise.bcaf_test_1.R
 import com.masesas.exercise.bcaf_test_1.domain.loan.model.LoanApplication
 import com.masesas.exercise.bcaf_test_1.domain.loan.model.LoanApplicationStatus
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.component.ListStatusOverlay
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.component.LoadMoreEffect
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.component.LoadingRow
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.MyBcafTest1Theme
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.component.ListStatusOverlay
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.component.LoadMoreEffect
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.component.LoadingRow
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.MyBcafTest1Theme
 import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.loan.LoanApplicationUiState
 import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.loan.LoanApplicationViewModel
 import java.math.BigDecimal

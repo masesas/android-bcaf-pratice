@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Elevation
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Radius
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Spacing
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Elevation
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Radius
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Spacing
 
 /**
  * Kontainer kartu standar aplikasi.

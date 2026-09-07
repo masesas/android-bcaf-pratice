@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.MyBcafTest1Theme
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Spacing
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.MyBcafTest1Theme
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Spacing
 
 /**
  * Input nominal rupiah.

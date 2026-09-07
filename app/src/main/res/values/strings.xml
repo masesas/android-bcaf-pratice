@@ -65,6 +65,14 @@
     <string name="login_hint_email">Email</string>
     <string name="login_hint_password">Password</string>
     <string name="login_action">Masuk</string>
+    <string name="login_action_register">Belum punya akun? Daftar</string>
+
+    <!-- Register -->
+    <string name="register_title">Daftar</string>
+    <string name="register_subtitle">Buat akun baru untuk mulai menggunakan aplikasi</string>
+    <string name="register_hint_name">Nama</string>
+    <string name="register_action">Daftar</string>
+    <string name="register_action_login">Sudah punya akun? Masuk</string>
 
     <!-- Pemilih stack UI setelah login -->
     <string name="home_choice_title">Pilih Tampilan Home</string>
@@ -73,4 +81,23 @@
     <string name="home_choice_legacy">Home Legacy</string>
     <!-- Logout -->
     <string name="action_logout">Keluar</string>
+    <string name="home_greeting">Selamat datang</string>
+    <string name="home_headline">Langkah baru untuk
+rencana besarmu.</string>
+    <string name="home_description">Temukan pilihan pembiayaan yang sesuai dengan kebutuhanmu.</string>
+    <string name="home_menu_title">Layanan untukmu</string>
+    <string name="home_menu_simulation">Simulasi</string>
+    <string name="home_menu_application">Ajukan Pinjaman</string>
+    <string name="home_menu_promo">Promo</string>
+    <string name="home_menu_help">Bantuan</string>
+    <string name="home_menu_placeholder">Layanan ini sedang disiapkan. Nantikan kemudahan berikutnya di sini.</string>
+    <string name="home_back">Kembali ke Beranda</string>
+    <string name="home_products_description">Bandingkan bunga, tenor, dan plafond pilihanmu.</string>
+    <string name="loan_product_active">Aktif</string>
+    <string name="loan_product_interest_label">Bunga per tahun</string>
+    <string name="loan_product_interest_value">%1$s%%</string>
+    <string name="loan_product_tenor_label">Pilihan tenor</string>
+    <string name="loan_product_tenor_value">%1$d–%2$d bulan</string>
+    <string name="loan_product_plafond_label">Plafond pinjaman</string>
+    <string name="loan_product_plafond_value">Rp %1$s – Rp %2$s</string>
 </resources>

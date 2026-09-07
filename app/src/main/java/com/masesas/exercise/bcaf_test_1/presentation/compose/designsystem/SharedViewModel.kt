@@ -1,4 +1,4 @@
-package com.masesas.exercise.bcaf_test_1.presentation.compose.ui
+package com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable

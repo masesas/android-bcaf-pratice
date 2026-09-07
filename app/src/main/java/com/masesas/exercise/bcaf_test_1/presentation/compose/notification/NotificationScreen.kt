@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.masesas.exercise.bcaf_test_1.R
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.component.PlaceholderScreen
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.component.PlaceholderScreen
 
 @Preview
 @Composable

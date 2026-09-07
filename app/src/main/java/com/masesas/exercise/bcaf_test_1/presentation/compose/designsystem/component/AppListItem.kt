@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Spacing
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Spacing
 
 /**
  * Baris daftar generik: slot `leading`, teks judul/subjudul, dan slot `trailing`.

@@ -15,8 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Radius
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Spacing
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Radius
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Spacing
 
 private val ButtonContentPadding = PaddingValues(
     horizontal = Spacing.xl,

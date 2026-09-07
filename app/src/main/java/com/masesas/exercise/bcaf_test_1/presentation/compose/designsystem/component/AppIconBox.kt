@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Radius
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Radius
 
 private val DefaultBoxSize = 44.dp
 private val DefaultIconSize = 22.dp

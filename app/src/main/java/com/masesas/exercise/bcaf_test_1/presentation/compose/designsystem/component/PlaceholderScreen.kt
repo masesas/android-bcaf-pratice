@@ -1,4 +1,4 @@
-package com.masesas.exercise.bcaf_test_1.presentation.compose.ui.component
+package com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

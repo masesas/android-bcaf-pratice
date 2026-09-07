@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
-import com.masesas.exercise.bcaf_test_1.presentation.compose.ui.theme.Radius
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Radius
 
 private val PlaceholderIconSize = 24.dp
 private val ProgressIndicatorSize = 20.dp
