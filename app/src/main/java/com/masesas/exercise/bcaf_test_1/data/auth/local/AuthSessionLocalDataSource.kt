@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.masesas.exercise.bcaf_test_1.BuildConfig
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthSession
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthUser
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-private const val AUTH_PREFERENCES_NAME = "auth_session"
+private const val AUTH_PREFERENCES_NAME = "${BuildConfig.APPLICATION_ID}_auth_session"
 
 private val Context.authPreferences: DataStore<Preferences> by preferencesDataStore(
     name = AUTH_PREFERENCES_NAME,
@@ -32,7 +33,7 @@ class AuthSessionLocalDataSource(context: Context) {
         }
         .map(::toSession)
 
-   suspend fun save(session: AuthSession) {
+    suspend fun save(session: AuthSession) {
         dataStore.edit { preferences ->
             preferences[Keys.USER_ID] = session.user.id
             preferences[Keys.USER_NAME] = session.user.name

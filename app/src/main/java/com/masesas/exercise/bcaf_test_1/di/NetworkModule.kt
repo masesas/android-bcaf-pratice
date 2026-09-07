@@ -9,6 +9,7 @@ import com.masesas.exercise.bcaf_test_1.data.auth.local.AuthSessionLocalDataSour
 import com.masesas.exercise.bcaf_test_1.data.auth.local.SessionAuthTokenProvider
 import com.masesas.exercise.bcaf_test_1.data.auth.remote.AuthApi
 import com.masesas.exercise.bcaf_test_1.data.loan.remote.LoanApplicationApi
+import com.masesas.exercise.bcaf_test_1.data.loan.remote.LoanProductApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 private const val TIMEOUT_SECONDS = 30L
+private const val HEADER_AUTHORIZATION = "Authorization"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -53,7 +55,12 @@ object NetworkModule {
         .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .addInterceptor(AuthHeaderInterceptor(tokenProvider))
         // Di build release, artifact chucker-no-op membuat interceptor ini tidak melakukan apa pun.
-        .addInterceptor(ChuckerInterceptor.Builder(context).build())
+        .addInterceptor(
+            ChuckerInterceptor.Builder(context)
+                .redactHeaders(HEADER_AUTHORIZATION)
+                .alwaysReadResponseBody(true)
+                .build()
+        )
         .build()
 
     @Provides
@@ -72,4 +79,9 @@ object NetworkModule {
     @Singleton
     fun provideLoanApplicationApi(retrofit: Retrofit): LoanApplicationApi =
         retrofit.create(LoanApplicationApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideLoanProductApi(retrofit: Retrofit): LoanProductApi =
+        retrofit.create(LoanProductApi::class.java)
 }

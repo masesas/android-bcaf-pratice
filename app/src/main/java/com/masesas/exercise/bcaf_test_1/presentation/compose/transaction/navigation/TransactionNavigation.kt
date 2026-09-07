@@ -12,9 +12,7 @@ fun NavGraphBuilder.transactionGraph(
 ) {
     navigation<TransactionGraph>(startDestination = TransactionRoute) {
         composable<TransactionRoute> {
-            TransactionScreen(
-                onOpenTransactionDetail = { onOpenTransactionDetail(SAMPLE_TRANSACTION_ID) },
-            )
+            TransactionScreen(onOpenTransactionDetail = onOpenTransactionDetail)
         }
 
         composable<TransactionDetailRoute> { backStackEntry ->
@@ -23,6 +21,3 @@ fun NavGraphBuilder.transactionGraph(
         }
     }
 }
-
-/** Sementara sampai daftar transaksi memakai data asli. */
-private const val SAMPLE_TRANSACTION_ID = "TRX-001"

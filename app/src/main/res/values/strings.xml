@@ -38,4 +38,39 @@
     <string name="compose_action_open_transaction_detail">Open Transaction Detail</string>
     <string name="compose_action_edit_profile">Edit Profile</string>
     <string name="compose_action_dokumen_profile">Dokumen Profile</string>
+    <!-- Loan product -->
+    <string name="loan_product_section_title">Produk Pinjaman</string>
+    <string name="loan_product_interest_format">Bunga %1$s%% / tahun</string>
+    <string name="loan_product_tenor_format">Tenor %1$d - %2$d bulan</string>
+    <string name="loan_product_plafond_format">Plafond Rp %1$s - Rp %2$s</string>
+    <string name="loan_product_inactive">Nonaktif</string>
+    <string name="loan_product_empty">Belum ada produk pinjaman.</string>
+    <string name="action_retry">Coba lagi</string>
+
+    <string name="loan_application_section_title">Pengajuan Pinjaman</string>
+    <string name="loan_application_amount_format">Rp %1$s</string>
+    <string name="loan_application_tenor_format">Tenor %1$d bulan</string>
+    <string name="loan_application_empty">Belum ada pengajuan pinjaman.</string>
+    <string name="loan_application_status_draft">Draft</string>
+    <string name="loan_application_status_submitted">Diajukan</string>
+    <string name="loan_application_status_approved">Disetujui</string>
+    <string name="loan_application_status_rejected">Ditolak</string>
+    <string name="loan_application_status_disbursed">Dicairkan</string>
+    <string name="loan_application_status_cancelled">Dibatalkan</string>
+    <string name="loan_application_status_unknown">Tidak diketahui</string>
+    <string name="title_activity_test_compose">TestCompose</string>
+    <!-- Login -->
+    <string name="login_title">Login</string>
+    <string name="login_subtitle">Silakan masuk untuk melanjutkan ke aplikasi</string>
+    <string name="login_hint_email">Email</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_action">Masuk</string>
+
+    <!-- Pemilih stack UI setelah login -->
+    <string name="home_choice_title">Pilih Tampilan Home</string>
+    <string name="home_choice_message">Masuk sebagai %1$s.\n\nPilih implementasi UI yang ingin dibuka.</string>
+    <string name="home_choice_compose">Home Compose</string>
+    <string name="home_choice_legacy">Home Legacy</string>
+    <!-- Logout -->
+    <string name="action_logout">Keluar</string>
 </resources>

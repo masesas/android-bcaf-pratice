@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".BcafApplication"
@@ -15,11 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bcaftest1">
         <activity
+            android:name=".testonly.TestCompose"
+            android:exported="false"
+            android:label="@string/title_activity_test_compose"
+            android:theme="@style/Theme.Bcaftest1" />
+        <activity
+            android:name=".presentation.auth.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".SecondActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,11 +41,14 @@
         <activity
             android:name=".presentation.legacy.HomeActivityLegacy"
             android:exported="true">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
     </application>
 

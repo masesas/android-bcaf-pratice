@@ -1,7 +1,10 @@
 package com.masesas.exercise.bcaf_test_1.presentation.legacy
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -11,12 +14,17 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.masesas.exercise.bcaf_test_1.R
+import com.masesas.exercise.bcaf_test_1.core.collectOnLifecycle
 import com.masesas.exercise.bcaf_test_1.databinding.ActivityHomeBinding
+import com.masesas.exercise.bcaf_test_1.presentation.auth.navigateToLoginAfterLogout
+import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /** Host nav graph; bottom navigation disembunyikan pada child fragment. */
 @AndroidEntryPoint
 class HomeActivityLegacy : AppCompatActivity() {
+
+    private val authViewModel: AuthViewModel by viewModels()
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
@@ -60,6 +68,29 @@ class HomeActivityLegacy : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.bottomNav.visibility =
                 if (destination.id in FULL_SCREEN_DESTINATIONS) View.GONE else View.VISIBLE
+        }
+
+        observeLogout()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.actionLogout -> {
+            authViewModel.logout()
+            true
+        }
+
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    /** Navigasi dipicu status, bukan hasil pemanggilan logout, supaya selamat dari rotasi. */
+    private fun observeLogout() {
+        authViewModel.uiState.collectOnLifecycle(this) { state ->
+            if (state.isLoggedOut) navigateToLoginAfterLogout()
         }
     }
 

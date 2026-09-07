@@ -17,6 +17,9 @@ data class AuthUiState(
 
     val isRestoringSession: Boolean get() = status == AuthStatus.UNKNOWN
 
+    /** Sengaja bukan `!isLoggedIn` — status UNKNOWN belum tentu berarti user sudah logout. */
+    val isLoggedOut: Boolean get() = status == AuthStatus.UNAUTHENTICATED
+
     val generalFailure: AppFailure?
         get() = failure.takeUnless { it is AuthFailure.Validation }
 
