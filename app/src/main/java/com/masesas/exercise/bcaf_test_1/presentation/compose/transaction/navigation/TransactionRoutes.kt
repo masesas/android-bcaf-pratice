@@ -8,3 +8,5 @@ data object TransactionRoute : AppRoute
 
 @Serializable
 data class TransactionDetailRoute(val transactionId: String) : AppRoute
+
+const val TRANSACTION_DETAIL_DEEP_LINK = "bcaf://transaction"

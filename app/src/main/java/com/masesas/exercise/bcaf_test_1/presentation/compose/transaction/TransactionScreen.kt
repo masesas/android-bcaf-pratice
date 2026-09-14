@@ -1,15 +1,23 @@
 package com.masesas.exercise.bcaf_test_1.presentation.compose.transaction
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,18 +33,14 @@ import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.compon
 import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.MyBcafTest1Theme
 import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.loan.LoanApplicationUiState
 import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.loan.LoanApplicationViewModel
+import kotlinx.coroutines.delay
 import java.math.BigDecimal
 
-/**
- * Daftar pengajuan pinjaman.
- *
- * [LoanApplicationViewModel] sengaja di-scope ke NavBackStackEntry lewat `hiltViewModel()`,
- * bukan ke Activity: state-nya hanya milik layar ini dan ikut mati bersamanya.
- */
+
 @Composable
 fun TransactionScreen(
-    onOpenTransactionDetail: (transactionId: String) -> Unit,
     modifier: Modifier = Modifier,
+    onOpenTransactionDetail: (transactionId: String) -> Unit = {},
     viewModel: LoanApplicationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -59,7 +63,31 @@ private fun TransactionScreen(
     modifier: Modifier = Modifier,
 ) {
     val listState = rememberLazyListState()
+
+    var mockLoading by remember {
+        mutableStateOf(false)
+    }
+
+    var selectedTransactionId by remember {
+        mutableStateOf<String?>(null)
+    }
+
+
     LoadMoreEffect(listState = listState, enabled = uiState.hasNextPage, onLoadMore = onLoadMore)
+
+    LaunchedEffect(mockLoading, selectedTransactionId) {
+        if (!mockLoading) return@LaunchedEffect
+
+        val transactionId = selectedTransactionId
+            ?: return@LaunchedEffect
+
+        delay(2000)
+
+        mockLoading = false
+        selectedTransactionId = null
+
+        onOpenTransactionDetail(transactionId)
+    }
 
     PullToRefreshBox(
         isRefreshing = uiState.isRefreshing,
@@ -78,7 +106,10 @@ private fun TransactionScreen(
             items(items = uiState.items, key = { it.id }) { application ->
                 LoanApplicationItem(
                     application = application,
-                    onClick = { onOpenTransactionDetail(application.id.toString()) },
+                    onClick = {
+                        selectedTransactionId = application.id.toString()
+                        mockLoading = true
+                    },
                 )
             }
 
@@ -93,6 +124,10 @@ private fun TransactionScreen(
             emptyMessage = stringResource(R.string.loan_application_empty),
             onRetry = onRefresh,
         )
+
+        if (mockLoading) {
+            FullScreenLoading()
+        }
     }
 }
 
@@ -106,6 +141,22 @@ private fun TransactionScreenPreview() {
             onLoadMore = {},
             onRefresh = {},
         )
+    }
+}
+
+@Composable
+private fun FullScreenLoading(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(
+                MaterialTheme.colorScheme.scrim.copy(alpha = 0.32f)
+            ),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator()
     }
 }
 

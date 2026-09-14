@@ -11,8 +11,8 @@ import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.compon
 
 @Composable
 fun ProfileScreen(
-    onOpenFormProfile: () -> Unit,
-    onOpenDokumenProfile: () -> Unit,
+    onOpenFormProfile: () -> Unit = {},
+    onOpenDokumenProfile: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     PlaceholderScreen(

@@ -40,12 +40,12 @@ class LoanProductViewModel @Inject constructor(
     /** Memuat ulang dari halaman pertama; cache lama digantikan hasil server. */
     fun refresh(initialLoad: Boolean = false) {
         val state = _uiState.value
-        if (state.isRefreshing || state.InitialLoading) return
+        if (state.isRefreshing || state.initialLoading) return
 
         // Penanda dipasang sinkron sebelum launch; kalau di dalam launch, dua panggilan
         // beruntun sama-sama lolos guard dan halaman yang sama diminta dua kali.
         _uiState.update {
-            it.copy(isRefreshing = !initialLoad, InitialLoading = initialLoad, failure = null)
+            it.copy(isRefreshing = !initialLoad, initialLoading = initialLoad, failure = null)
         }
 
         viewModelScope.launch {
@@ -55,14 +55,16 @@ class LoanProductViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isRefreshing = false,
-                            InitialLoading = false,
+                            initialLoading = false,
                             hasNextPage = result.data.hasNextPage,
                         )
                     }
                 }
 
-                is AppResult.Failure -> _uiState.update {
-                    it.copy(isRefreshing = false, InitialLoading = false, failure = result.failure)
+                is AppResult.Failure -> {
+                    _uiState.update {
+                        it.copy(isRefreshing = false, initialLoading = false, failure = result.failure)
+                    }
                 }
             }
         }
@@ -70,7 +72,7 @@ class LoanProductViewModel @Inject constructor(
 
     fun loadMore() {
         val state = _uiState.value
-        if (state.isRefreshing || state.InitialLoading || state.isLoadingMore) return
+        if (state.isRefreshing || state.initialLoading || state.isLoadingMore) return
         if (!state.hasNextPage) return
 
         val nextPage = loadedPages.value
