@@ -13,3 +13,13 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Service account Firebase — jangan pernah di-commit
+*firebase-adminsdk*.json
+*service-account*.json
+firebase-credentials.json
+
+
+keystore.properties
+*.jks
+*.pem

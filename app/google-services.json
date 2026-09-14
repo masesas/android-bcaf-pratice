@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "375913628663",
+    "project_id": "exercise-project-404606",
+    "storage_bucket": "exercise-project-404606.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375913628663:android:71754d22fba80a159824f2",
+        "android_client_info": {
+          "package_name": "com.masesas.exercise.bcaf_test_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375913628663-5odg6ajkemmk2etodj0uemfef53ga2tt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkuxpu8zLGjcu83u3Nuq3akfIDkrsf6rE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375913628663-5odg6ajkemmk2etodj0uemfef53ga2tt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375913628663:android:620f8d79b159479c9824f2",
+        "android_client_info": {
+          "package_name": "com.masesas.fe.invboxgen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375913628663-5odg6ajkemmk2etodj0uemfef53ga2tt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkuxpu8zLGjcu83u3Nuq3akfIDkrsf6rE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375913628663-5odg6ajkemmk2etodj0uemfef53ga2tt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
