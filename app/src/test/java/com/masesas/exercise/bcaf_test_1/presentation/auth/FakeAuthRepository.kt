@@ -1,4 +1,4 @@
-package com.masesas.exercise.bcaf_test_1.auth
+package com.masesas.exercise.bcaf_test_1.presentation.auth
 
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthSession
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthUser

@@ -1,4 +1,4 @@
-package com.masesas.exercise.bcaf_test_1.loan
+package com.masesas.exercise.bcaf_test_1.data.loan
 
 import com.masesas.exercise.bcaf_test_1.core.network.ApiEnvelope
 import com.masesas.exercise.bcaf_test_1.core.network.ApiMetaDto

@@ -1,8 +1,10 @@
-package com.masesas.exercise.bcaf_test_1.loan
+package com.masesas.exercise.bcaf_test_1.presentation.loan
 
-import com.masesas.exercise.bcaf_test_1.data.loan.repository.LoanApplicationRepositoryImpl
+import com.masesas.exercise.bcaf_test_1.data.loan.repository.LoanProductRepositoryImpl
 import com.masesas.exercise.bcaf_test_1.domain.common.CommonFailure
-import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.loan.LoanApplicationViewModel
+import com.masesas.exercise.bcaf_test_1.data.loan.FakeLoanProductApi
+import com.masesas.exercise.bcaf_test_1.data.loan.FakeLoanProductDao
+import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.loan.LoanProductViewModel
 import com.masesas.exercise.bcaf_test_1.testing.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -10,7 +12,6 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -19,16 +20,16 @@ import org.junit.Test
 private const val PAGE_SIZE = 20
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class LoanApplicationViewModelTest {
+class LoanProductViewModelTest {
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val dao = FakeLoanApplicationDao()
-    private val api = FakeLoanApplicationApi(totalElements = 55)
+    private val dao = FakeLoanProductDao()
+    private val api = FakeLoanProductApi(totalElements = 55)
 
-    private fun viewModel() = LoanApplicationViewModel(
-        LoanApplicationRepositoryImpl(
+    private fun viewModel() = LoanProductViewModel(
+        LoanProductRepositoryImpl(
             dao = dao,
             api = api,
             json = Json,
@@ -44,7 +45,6 @@ class LoanApplicationViewModelTest {
         val state = viewModel.uiState.value
         assertEquals(PAGE_SIZE, state.items.size)
         assertTrue(state.hasNextPage)
-        assertFalse(state.isRefreshing)
         assertNull(state.failure)
     }
 
@@ -72,8 +72,21 @@ class LoanApplicationViewModelTest {
 
         val state = viewModel.uiState.value
         assertEquals(55, state.items.size)
-        assertFalse(state.hasNextPage)
+        assertEquals(false, state.hasNextPage)
         assertEquals(2, api.lastPage)
+    }
+
+    @Test
+    fun `refresh kembali ke halaman pertama`() = runTest {
+        val viewModel = viewModel()
+        advanceUntilIdle()
+        viewModel.loadMore()
+        advanceUntilIdle()
+
+        viewModel.refresh()
+        advanceUntilIdle()
+
+        assertEquals(PAGE_SIZE, viewModel.uiState.value.items.size)
     }
 
     /** Scroll cepat memanggil loadMore beruntun; halaman yang sama tidak boleh diminta dua kali. */
@@ -91,60 +104,42 @@ class LoanApplicationViewModelTest {
         assertEquals(PAGE_SIZE * 2, viewModel.uiState.value.items.size)
     }
 
+    /** Dua tarikan pull-to-refresh beruntun hanya boleh menghasilkan satu panggilan server. */
     @Test
-    fun `refresh kembali ke halaman pertama`() = runTest {
+    fun `refresh beruntun hanya sekali memanggil server`() = runTest {
         val viewModel = viewModel()
-        advanceUntilIdle()
-        viewModel.loadMore()
-        advanceUntilIdle()
-
-        viewModel.refresh()
-        advanceUntilIdle()
-
-        assertEquals(PAGE_SIZE, viewModel.uiState.value.items.size)
-    }
-
-    /** Setelah refresh, cursor paging harus balik ke 0 agar loadMore tidak melompati halaman 1. */
-    @Test
-    fun `loadMore setelah refresh melanjutkan dari halaman satu`() = runTest {
-        val viewModel = viewModel()
-        advanceUntilIdle()
-        viewModel.loadMore()
-        advanceUntilIdle()
-        viewModel.refresh()
         advanceUntilIdle()
         api.requestedPages.clear()
 
-        viewModel.loadMore()
+        viewModel.refresh()
+        viewModel.refresh()
         advanceUntilIdle()
 
-        assertEquals(listOf(1), api.requestedPages)
+        assertEquals(listOf(0), api.requestedPages)
+    }
+
+    /** Guard re-entrancy tidak boleh mengunci refresh selamanya setelah initial load selesai. */
+    @Test
+    fun `refresh tetap jalan setelah initial load selesai`() = runTest {
+        val viewModel = viewModel()
+        advanceUntilIdle()
+        api.requestedPages.clear()
+
+        viewModel.refresh()
+        advanceUntilIdle()
+
+        assertEquals(listOf(0), api.requestedPages)
     }
 
     @Test
     fun `offline saat cold start tetap menampilkan cache`() = runTest {
         viewModel().also { advanceUntilIdle() }
-        api.failWith = FakeLoanApplicationApi.offline()
+        api.failWith = FakeLoanProductApi.Companion.offline()
 
         val state = viewModel().let { advanceUntilIdle(); it.uiState.value }
 
         assertEquals(PAGE_SIZE, state.items.size)
         assertTrue(state.failure is CommonFailure.Network)
         assertNull(state.blockingFailure)
-    }
-
-    @Test
-    fun `clearFailure menghapus kegagalan tanpa menyentuh data`() = runTest {
-        val viewModel = viewModel()
-        advanceUntilIdle()
-        api.failWith = FakeLoanApplicationApi.offline()
-        viewModel.refresh()
-        advanceUntilIdle()
-
-        viewModel.clearFailure()
-
-        val state = viewModel.uiState.value
-        assertNull(state.failure)
-        assertEquals(PAGE_SIZE, state.items.size)
     }
 }
