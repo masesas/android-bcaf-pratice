@@ -17,6 +17,10 @@
 
 - [Room Migration Handbook](room-migration-handbook.md) — cara kerja schema export, workflow saat menambah/mengubah entity, tiga pola migrasi (tambah tabel, tambah kolom, ubah tipe kolom), strategi testing termasuk pembuktian test bisa gagal, dan troubleshooting.
 
+## Push Notification
+
+- [Firebase Cloud Messaging — Panduan End-to-End](firebase/README.md) — 10 dokumen dari setup Firebase Console, konfigurasi Gradle/manifest, notification channel dan izin Android 13+, `FirebaseMessagingService`, registrasi token ke backend, deep link ke route Compose, pengiriman HTTP v1 dari backend, sampai testing, troubleshooting, dan checklist rilis.
+
 ## Kontrak API
 
 - [`api-contract/`](api-contract/) — JSON Schema response endpoint (`get-list-loan.json`, `pageable-request.json`).

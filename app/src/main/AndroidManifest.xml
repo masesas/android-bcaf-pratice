@@ -5,6 +5,20 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <!-- Sebelum API 33 galeri dibaca lewat izin storage lama. -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <application
         android:name=".BcafApplication"
         android:allowBackup="true"
@@ -16,15 +30,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bcaftest1">
         <activity
-            android:name=".testonly.TestCompose"
-            android:exported="false"
-            android:label="@string/title_activity_test_compose"
-            android:theme="@style/Theme.Bcaftest1" />
-        <activity
             android:name=".presentation.auth.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SecondActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -50,6 +56,49 @@
             </intent-filter>
             -->
         </activity>
+
+        <!-- Menyediakan URI tujuan foto kamera dari cache aplikasi. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- WorkManager diinisialisasi on-demand lewat Configuration.Provider di BcafApplication. -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+        <service
+            android:name=".service.PushMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Mengaktifkan registrasi FCM berbasis Firebase Installation ID (menggantikan API token yang deprecated). -->
+        <meta-data
+            android:name="firebase_messaging_installation_id_enabled"
+            android:value="true" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="general" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_nav_notification" />
     </application>
 
 </manifest>

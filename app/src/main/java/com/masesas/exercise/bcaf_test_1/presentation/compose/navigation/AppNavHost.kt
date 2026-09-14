@@ -1,10 +1,7 @@
 package com.masesas.exercise.bcaf_test_1.presentation.compose.navigation
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -25,35 +22,26 @@ fun AppNavHost(
     navController: NavHostController,
     startDestination: AppRoute,
     onLogout: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination,
         modifier = modifier,
         enterTransition = {
-            fadeIn(animationSpec = tween(180)) + slideInHorizontally(
-                animationSpec = tween(220),
-                initialOffsetX = { it / 12 },
-            )
+            EnterTransition.None
         },
+
         exitTransition = {
-            fadeOut(animationSpec = tween(150)) + slideOutHorizontally(
-                animationSpec = tween(180),
-                targetOffsetX = { -it / 12 },
-            )
+            ExitTransition.None
         },
+
         popEnterTransition = {
-            fadeIn(animationSpec = tween(180)) + slideInHorizontally(
-                animationSpec = tween(220),
-                initialOffsetX = { -it / 12 },
-            )
+            EnterTransition.None
         },
+
         popExitTransition = {
-            fadeOut(animationSpec = tween(150)) + slideOutHorizontally(
-                animationSpec = tween(180),
-                targetOffsetX = { it / 12 },
-            )
+            ExitTransition.None
         },
     ) {
         authGraph(
@@ -72,7 +60,11 @@ fun AppNavHost(
         }
 
         homeDetailDestinations(onBack = { navController.popBackStack() })
-        transactionDetailDestinations()
-        profileDetailDestinations()
+        transactionDetailDestinations(
+            navController = navController
+        )
+        profileDetailDestinations(
+            navController = navController
+        )
     }
 }

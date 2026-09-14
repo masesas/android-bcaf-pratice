@@ -1,13 +1,16 @@
 package com.masesas.exercise.bcaf_test_1.presentation.compose.navigation
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import com.masesas.exercise.bcaf_test_1.presentation.compose.auth.navigation.AuthGraph
 
 @Composable
@@ -17,8 +20,23 @@ fun AppRoot(
     isLoggedOut: Boolean,
     onLogout: () -> Unit,
     modifier: Modifier = Modifier,
+    deepLink: Uri? = null,
+    onDeepLinkHandled: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
 ) {
+    LaunchedEffect(deepLink, isLoggedIn) {
+        val uri = deepLink ?: return@LaunchedEffect
+        if (!isLoggedIn) return@LaunchedEffect
+
+        if (navController.graph.hasDeepLink(uri)) {
+            navController.navigate(
+                request = NavDeepLinkRequest.Builder.fromUri(uri).build(),
+                navOptions = navOptions { launchSingleTop = true },
+            )
+        }
+        onDeepLinkHandled()
+    }
+
     LaunchedEffect(isLoggedIn, isLoggedOut) {
         val currentDestination = navController.currentDestination ?: return@LaunchedEffect
         val isOnAuth = currentDestination.isInGraph(AuthGraph)

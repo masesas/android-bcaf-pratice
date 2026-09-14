@@ -10,6 +10,7 @@ import com.masesas.exercise.bcaf_test_1.data.auth.local.SessionAuthTokenProvider
 import com.masesas.exercise.bcaf_test_1.data.auth.remote.AuthApi
 import com.masesas.exercise.bcaf_test_1.data.loan.remote.LoanApplicationApi
 import com.masesas.exercise.bcaf_test_1.data.loan.remote.LoanProductApi
+import com.masesas.exercise.bcaf_test_1.data.notification.remote.DeviceRegistrationApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -74,6 +75,11 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDeviceRegistrationApi(retrofit: Retrofit): DeviceRegistrationApi =
+        retrofit.create(DeviceRegistrationApi::class.java)
 
     @Provides
     @Singleton
