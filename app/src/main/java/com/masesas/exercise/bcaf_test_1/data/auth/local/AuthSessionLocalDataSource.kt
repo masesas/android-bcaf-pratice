@@ -35,11 +35,14 @@ class AuthSessionLocalDataSource(context: Context) {
 
     suspend fun save(session: AuthSession) {
         dataStore.edit { preferences ->
-            preferences[Keys.USER_ID] = session.user.id
-            preferences[Keys.USER_NAME] = session.user.name
-            preferences[Keys.USER_EMAIL] = session.user.email
-            preferences[Keys.USER_TIPE] = session.user.tipe.orEmpty()
-            preferences[Keys.USER_ROLES] = session.user.roles.toSet()
+            preferences.clear()
+            session.user?.let { user ->
+                preferences[Keys.USER_ID] = user.id
+                preferences[Keys.USER_NAME] = user.name
+                preferences[Keys.USER_EMAIL] = user.email
+                preferences[Keys.USER_TIPE] = user.tipe.orEmpty()
+                preferences[Keys.USER_ROLES] = user.roles.toSet()
+            }
             preferences[Keys.ACCESS_TOKEN] = session.accessToken
             preferences[Keys.EXPIRES_AT] = session.expiresAtMillis
         }
@@ -50,22 +53,27 @@ class AuthSessionLocalDataSource(context: Context) {
     }
 
     private fun toSession(preferences: Preferences): AuthSession? {
-        val id = preferences[Keys.USER_ID] ?: return null
-        val name = preferences[Keys.USER_NAME] ?: return null
-        val email = preferences[Keys.USER_EMAIL] ?: return null
         val token = preferences[Keys.ACCESS_TOKEN] ?: return null
         val expiresAt = preferences[Keys.EXPIRES_AT] ?: return null
 
         return AuthSession(
-            user = AuthUser(
-                id = id,
-                name = name,
-                email = email,
-                tipe = preferences[Keys.USER_TIPE]?.takeIf { it.isNotBlank() },
-                roles = preferences[Keys.USER_ROLES].orEmpty().toList(),
-            ),
+            user = toUser(preferences),
             accessToken = token,
             expiresAtMillis = expiresAt,
+        )
+    }
+
+    private fun toUser(preferences: Preferences): AuthUser? {
+        val id = preferences[Keys.USER_ID] ?: return null
+        val name = preferences[Keys.USER_NAME] ?: return null
+        val email = preferences[Keys.USER_EMAIL] ?: return null
+
+        return AuthUser(
+            id = id,
+            name = name,
+            email = email,
+            tipe = preferences[Keys.USER_TIPE]?.takeIf { it.isNotBlank() },
+            roles = preferences[Keys.USER_ROLES].orEmpty().toList(),
         )
     }
 

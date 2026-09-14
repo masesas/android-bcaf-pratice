@@ -4,6 +4,7 @@ import android.content.Context
 import com.masesas.exercise.bcaf_test_1.data.auth.local.AuthSessionLocalDataSource
 import com.masesas.exercise.bcaf_test_1.data.auth.mock.MockAuthApi
 import com.masesas.exercise.bcaf_test_1.data.auth.remote.AuthApi
+import com.masesas.exercise.bcaf_test_1.data.auth.remote.Base64JwtDecoder
 import com.masesas.exercise.bcaf_test_1.data.auth.remote.JwtDecoder
 import com.masesas.exercise.bcaf_test_1.data.auth.repository.AuthRepositoryImpl
 import com.masesas.exercise.bcaf_test_1.domain.auth.repository.AuthRepository
@@ -27,7 +28,7 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideJwtDecoder(json: Json): JwtDecoder = JwtDecoder(json)
+    fun provideJwtDecoder(json: Json): JwtDecoder = Base64JwtDecoder(json)
 
     @Provides
     @Singleton

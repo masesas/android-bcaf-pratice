@@ -37,6 +37,17 @@ fun <T> ApiEnvelope<T>.requirePayload(): AppResult<T> {
 }
 
 private fun HttpException.toFailure(json: Json): CommonFailure {
+    val parsedEnvelope = runCatching {
+        val bodyString = response()?.errorBody()?.string() ?: return@runCatching null
+        json.decodeFromString<ApiEnvelope<ApiErrorDto>>(bodyString)
+    }.getOrNull()
+
+    parsedEnvelope?.let {
+        return CommonFailure.ApiError(
+            message = it.message
+        )
+    }
+
     if (code() == HTTP_UNAUTHORIZED || code() == HTTP_FORBIDDEN) return CommonFailure.Unauthorized
 
     val body = runCatching { response()?.errorBody()?.string() }.getOrNull()

@@ -5,7 +5,7 @@ import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthUser
 
 sealed interface AuthEvent {
 
-    data class LoggedIn(val user: AuthUser) : AuthEvent
+    data class LoggedIn(val user: AuthUser?) : AuthEvent
 
     data class Registered(val user: AuthUser) : AuthEvent
 

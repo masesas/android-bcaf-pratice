@@ -9,6 +9,9 @@ import com.masesas.exercise.bcaf_test_1.domain.auth.repository.AuthRepository
 //import com.masesas.exercise.bcaf_test_1.data.auth.repository.AuthRepositoryImpl
 
 interface AppContainer {
+    // authapi
+    // database
+    // netwrok
     val authRepository: AuthRepository
 }
 

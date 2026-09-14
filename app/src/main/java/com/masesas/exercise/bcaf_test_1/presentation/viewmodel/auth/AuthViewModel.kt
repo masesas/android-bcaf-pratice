@@ -2,18 +2,20 @@ package com.masesas.exercise.bcaf_test_1.presentation.viewmodel.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import com.masesas.exercise.bcaf_test_1.domain.common.AppResult
-import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthField
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthFailure
-import com.masesas.exercise.bcaf_test_1.domain.common.AppFailure
+import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthField
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.AuthSession
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.LoginCredentials
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.RegisterCredentials
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.ValidationError
 import com.masesas.exercise.bcaf_test_1.domain.auth.repository.AuthRepository
 import com.masesas.exercise.bcaf_test_1.domain.auth.validation.AuthCredentialsValidator
+import com.masesas.exercise.bcaf_test_1.domain.common.AppFailure
+import com.masesas.exercise.bcaf_test_1.domain.common.AppResult
+import com.masesas.exercise.bcaf_test_1.domain.common.CommonFailure
+import com.masesas.exercise.bcaf_test_1.domain.notification.model.NotificationTopic
+import com.masesas.exercise.bcaf_test_1.domain.notification.repository.DeviceRegistrationRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,13 +23,18 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
+    private val deviceRegistration: DeviceRegistrationRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
@@ -42,6 +49,7 @@ class AuthViewModel @Inject constructor(
 
     init {
         observeSession()
+        registerDeviceWhileLoggedIn()
         restoreSession()
     }
 
@@ -61,7 +69,11 @@ class AuthViewModel @Inject constructor(
         submit(
             fieldErrors = AuthCredentialsValidator.validateRegister(credentials),
             operation = { authRepository.register(credentials) },
-            successEvent = { session -> AuthEvent.Registered(session.user) },
+            successEvent = { session ->
+                session.user?.let {
+                    AuthEvent.Registered(it)
+                } ?: AuthEvent.Failed(AuthFailure.InvalidCredentials)
+            },
         )
     }
 
@@ -70,6 +82,8 @@ class AuthViewModel @Inject constructor(
 
         viewModelScope.launch {
             markSubmitting()
+            // Dijalankan sebelum sesi dihapus karena pelepasan perangkat butuh token yang masih berlaku.
+            deviceRegistration.unregister()
 
             when (val result = authRepository.logout()) {
                 is AppResult.Success -> _events.tryEmit(AuthEvent.LoggedOut)
@@ -108,6 +122,19 @@ class AuthViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    private fun registerDeviceWhileLoggedIn() {
+        viewModelScope.launch {
+            authRepository.observeSession()
+                .map { session -> session != null }
+                .distinctUntilChanged()
+                .filter { isLoggedIn -> isLoggedIn }
+                .collect {
+                    deviceRegistration.ensureRegistered()
+                    deviceRegistration.subscribe(DEFAULT_TOPICS)
+                }
         }
     }
 
@@ -169,5 +196,6 @@ class AuthViewModel @Inject constructor(
 
     private companion object {
         const val EVENT_BUFFER_CAPACITY = 8
+        val DEFAULT_TOPICS = setOf(NotificationTopic.PROMO, NotificationTopic.ANNOUNCEMENT)
     }
 }

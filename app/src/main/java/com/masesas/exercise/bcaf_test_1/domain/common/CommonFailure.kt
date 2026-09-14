@@ -10,6 +10,7 @@ sealed interface CommonFailure : AppFailure {
     data class ApiError(
         val code: String? = null,
         val details: List<String> = emptyList(),
+        val message: String? = null,
     ) : CommonFailure
 
     data class Unexpected(val cause: Throwable? = null) : CommonFailure

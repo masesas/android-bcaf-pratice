@@ -12,12 +12,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,6 +29,7 @@ import com.masesas.exercise.bcaf.bc.pratice.presentation.designsystem.component.
 import com.masesas.exercise.bcaf.bc.pratice.presentation.designsystem.component.AppPrimaryButton
 import com.masesas.exercise.bcaf.bc.pratice.presentation.designsystem.component.AppSecondaryButton
 import com.masesas.exercise.bcaf.bc.pratice.presentation.designsystem.component.AppTextField
+import com.masesas.exercise.bcaf_test_1.BuildConfig
 import com.masesas.exercise.bcaf_test_1.R
 import com.masesas.exercise.bcaf_test_1.core.ui.asString
 import com.masesas.exercise.bcaf_test_1.core.ui.toUiMessage
@@ -65,6 +68,11 @@ fun LoginScreen(
     )
 }
 
+internal object LoginTestTags {
+    const val EMAIL = "login_email"
+    const val PASSWORD = "login_password"
+}
+
 @Composable
 private fun LoginScreen(
     uiState: AuthUiState,
@@ -96,6 +104,7 @@ private fun LoginScreen(
         AppTextField(
             value = email,
             onValueChange = onEmailChange,
+            modifier = Modifier.testTag(LoginTestTags.EMAIL),
             label = stringResource(R.string.login_hint_email),
             errorMessage = uiState.errorOf(AuthField.EMAIL)?.toUiMessage()?.asString(),
             enabled = !uiState.isSubmitting,
@@ -108,6 +117,7 @@ private fun LoginScreen(
         AppPasswordField(
             value = password,
             onValueChange = onPasswordChange,
+            modifier = Modifier.testTag(LoginTestTags.PASSWORD),
             label = stringResource(R.string.login_hint_password),
             errorMessage = uiState.errorOf(AuthField.PASSWORD)?.toUiMessage()?.asString(),
             enabled = !uiState.isSubmitting,

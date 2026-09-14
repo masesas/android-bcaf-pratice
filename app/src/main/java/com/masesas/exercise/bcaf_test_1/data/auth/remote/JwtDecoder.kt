@@ -12,10 +12,14 @@ data class JwtClaims(
     val email: String? = null,
 )
 
-/** Membaca payload JWT tanpa memverifikasi signature — hanya untuk mengisi identitas & masa berlaku. */
-class JwtDecoder(private val json: Json) {
+fun interface JwtDecoder {
+    fun decode(token: String): JwtClaims?
+}
 
-    fun decode(token: String): JwtClaims? {
+/** Membaca payload JWT tanpa memverifikasi signature — hanya untuk mengisi identitas & masa berlaku. */
+class Base64JwtDecoder(private val json: Json) : JwtDecoder {
+
+    override fun decode(token: String): JwtClaims? {
         val payload = token.split(".").getOrNull(1) ?: return null
 
         val decoded = runCatching {

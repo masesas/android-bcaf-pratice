@@ -1,10 +1,7 @@
 package com.masesas.exercise.bcaf_test_1.domain.auth.model
 
-/**
- * Session hasil autentikasi: siapa user-nya + kredensial akses yang berlaku sampai [expiresAtMillis].
- */
 data class AuthSession(
-    val user: AuthUser,
+    val user: AuthUser? = null,
     val accessToken: String,
     val expiresAtMillis: Long,
 ) {

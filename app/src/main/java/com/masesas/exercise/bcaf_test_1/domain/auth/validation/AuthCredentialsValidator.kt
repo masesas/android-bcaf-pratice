@@ -5,12 +5,7 @@ import com.masesas.exercise.bcaf_test_1.domain.auth.model.LoginCredentials
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.RegisterCredentials
 import com.masesas.exercise.bcaf_test_1.domain.auth.model.ValidationError
 
-/**
- * Aturan validasi input auth. Fungsi murni tanpa dependency — dipanggil ViewModel sebelum
- * memanggil repository, dan dipanggil ulang di repository sebagai penjaga boundary.
- *
- * Mengembalikan map kosong bila valid.
- */
+
 object AuthCredentialsValidator {
 
     const val MIN_PASSWORD_LENGTH = 8

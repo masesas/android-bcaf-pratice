@@ -1,6 +1,5 @@
 package com.masesas.exercise.bcaf_test_1.domain.common
 
-/** Hasil operasi: sukses membawa data, gagal membawa [AppFailure] bertipe. */
 sealed interface AppResult<out T> {
 
     data class Success<out T>(val data: T) : AppResult<T>
