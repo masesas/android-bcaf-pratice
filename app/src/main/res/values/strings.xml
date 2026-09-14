@@ -100,4 +100,33 @@ rencana besarmu.</string>
     <string name="loan_product_tenor_value">%1$d–%2$d bulan</string>
     <string name="loan_product_plafond_label">Plafond pinjaman</string>
     <string name="loan_product_plafond_value">Rp %1$s – Rp %2$s</string>
+    <!-- Notifikasi -->
+    <string name="notification_channel_general">Umum</string>
+    <string name="notification_channel_transaction">Transaksi</string>
+    <string name="notification_channel_promo">Promo</string>
+    <string name="notification_manual_action">Kirim Notifikasi Uji</string>
+    <string name="notification_manual_title">Pengajuan disetujui</string>
+    <string name="notification_manual_body">Ketuk untuk melihat detail transaksi TRX-001.</string>
+    <!-- Izin runtime -->
+    <string name="permission_section_title">Izin Aplikasi</string>
+    <string name="permission_section_description">Ketuk untuk meminta izin. Kalau sudah diberikan, aksinya langsung berjalan.</string>
+    <string name="permission_camera">Kamera</string>
+    <string name="permission_image_picker">Pilih Gambar</string>
+    <string name="permission_storage">Baca Galeri</string>
+    <string name="permission_location">Lokasi</string>
+    <string name="permission_denied">Izin %1$s ditolak.</string>
+    <string name="permission_permanently_denied">Izin %1$s ditolak permanen. Aktifkan lewat Pengaturan.</string>
+    <string name="permission_open_settings">Buka Pengaturan</string>
+    <string name="permission_settings_unavailable">Halaman Pengaturan tidak tersedia di perangkat ini.</string>
+    <string name="permission_camera_saved">Foto berhasil diambil.</string>
+    <string name="permission_camera_cancelled">Pengambilan foto dibatalkan.</string>
+    <string name="permission_camera_unavailable">Tidak ada aplikasi kamera di perangkat ini.</string>
+    <string name="permission_image_selected">Gambar dipilih.</string>
+    <string name="permission_image_cancelled">Tidak ada gambar yang dipilih.</string>
+    <string name="permission_storage_result">Ditemukan %1$d gambar di galeri.</string>
+    <string name="permission_storage_error">Galeri gagal dibaca.</string>
+    <string name="permission_location_result">Lokasi: %1$.5f, %2$.5f</string>
+    <string name="permission_location_unavailable">Lokasi belum tersedia. Pastikan layanan lokasi aktif.</string>
+    <string name="permission_location_open_services">Aktifkan Layanan Lokasi</string>
+    <string name="permission_result_image">Pratinjau gambar</string>
 </resources>

@@ -3,9 +3,9 @@ package com.masesas.exercise.bcaf_test_1.presentation.compose.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,20 +18,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.masesas.exercise.bcaf.bc.pratice.presentation.designsystem.component.AppSectionHeader
-import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Spacing
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.masesas.exercise.bcaf.bc.pratice.presentation.designsystem.component.AppSectionHeader
 import com.masesas.exercise.bcaf_test_1.R
 import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.component.ListStatusOverlay
 import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.component.LoadMoreEffect
 import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.component.LoadingRow
 import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.sharedActivityViewModel
+import com.masesas.exercise.bcaf_test_1.presentation.compose.designsystem.theme.Spacing
 import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.loan.LoanProductUiState
 import com.masesas.exercise.bcaf_test_1.presentation.viewmodel.loan.LoanProductViewModel
 
 @Composable
 fun HomeScreen(
-    onOpenMenu: (HomeMenu) -> Unit,
+    onOpenMenu: (HomeMenu) -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: LoanProductViewModel = sharedActivityViewModel(),
 ) {
@@ -70,6 +70,7 @@ private fun HomeScreen(
         ) {
             item(key = "header") { HomeHeader() }
             item(key = "menu") { HomeMenuGrid(onOpenMenu = onOpenMenu) }
+            item(key = "permissions") { HomePermissionSection() }
             item(key = "products_title") {
                 AppSectionHeader(title = stringResource(R.string.loan_product_section_title))
                 Text(
@@ -82,11 +83,13 @@ private fun HomeScreen(
             items(items = uiState.items, key = { it.id }) { product ->
                 LoanProductItem(product = product)
             }
-            if (uiState.InitialLoading || uiState.isLoadingMore) {
+            if (uiState.initialLoading || uiState.isLoadingMore) {
                 item(key = "loading") { LoadingRow() }
             } else if (uiState.blockingFailure != null || uiState.isEmpty) {
                 item(key = "status") {
-                    Box(modifier = Modifier.fillMaxWidth().heightIn(min = 160.dp)) {
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 160.dp)) {
                         ListStatusOverlay(
                             failure = uiState.blockingFailure,
                             isEmpty = uiState.isEmpty,
