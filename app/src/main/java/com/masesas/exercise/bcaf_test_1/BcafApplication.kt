@@ -1,7 +1,12 @@
 package com.masesas.exercise.bcaf_test_1
 
 import android.app.Application
+import android.util.Log
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
+import com.masesas.exercise.bcaf_test_1.core.sync.SyncScheduler
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 // DI manual di bawah ini digantikan Hilt.
 //import androidx.lifecycle.HasDefaultViewModelProviderFactory
@@ -15,7 +20,25 @@ import dagger.hilt.android.HiltAndroidApp
 //import com.masesas.exercise.bcaf_test_1.core.globalViewModelFactory
 
 @HiltAndroidApp
-class BcafApplication : Application()
+class BcafApplication : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    @Inject
+    lateinit var syncScheduler: SyncScheduler
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .setMinimumLoggingLevel(if (BuildConfig.DEBUG) Log.DEBUG else Log.INFO)
+            .build()
+
+    override fun onCreate() {
+        super.onCreate()
+        syncScheduler.schedulePeriodicSync()
+    }
+}
 //    ViewModelStoreOwner,
 //    HasDefaultViewModelProviderFactory {
 //
